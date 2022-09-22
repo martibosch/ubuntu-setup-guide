@@ -38,9 +38,12 @@ Tested for xubuntu 20.04.3 LTS (Focal Fossa) in a Lenovo Thinkpad X1 Carbon 8.
 1. [Generate a new ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and then [add it to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
 2. Download gpg key from MEGA and import it, i.e., `gpg --import private.key`.
 3. Trust the imported key by first checking its ID using `gpg --list-keys --keyid-format LONG`, then `gpg --edit-key <key-id-after-rsa4096>`, enter `trust`, assign a decision (e.g., "5 = I trust ultimately"), enter `quit` and kill the gpg agent as in `gpgconf --kill gpg-agent` so that the changes take effect.
-4. Configure [the git user name and email](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
-5. Add [signing key to git](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key), i.e., `gpg --list-keys --keyid-format=long` and `git config --global user.signingkey <key-id-after-rsa4096>`.
-6. Configure git to sign all commits, i.e., `git config --global commit.gpgsign true`.
+4. Configure git:
+  * set the [git user name and email](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
+  * add [signing key to git](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key), i.e., `gpg --list-keys --keyid-format=long` and `git config --global user.signingkey <key-id-after-rsa4096>`
+  * set the name of the default branch to "main", i.e., `git config --global init.defaultBranch main`
+  * set git to sign all commits, i.e., `git config --global commit.gpgsign true`
+8. Download the [emacs gitignore file](https://github.com/github/gitignore/blob/main/Global/Emacs.gitignore) and set it as global gitignore, i.e., `git config --global core.excludesfile ~/Emacs.gitignore`
 
 ## 4. Docker
 
@@ -101,7 +104,21 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-o
 
 1. Configure the named profiles using the command `aws configure --profile <profile-name>`.
 
+#### GitHub CLI
+
+1. Add the autocompletion setup to the zsh profile following the steps at https://www.ajfriesen.com/github-cli-auto-completion-with-oh-my-zsh/
+
 ## 6. Emacs
 
 1. Clone [the emacs setup](https://github.com/martibosch/.emacs.d), i.e., `git clone git@github.com:martibosch/.emacs.d.git` to the user's home directory.
 2. Follow the installation steps in the `README.md` file.
+
+## 7. Kubernetes
+
+### minikube
+
+1. Add the autocompletion setup to the zsh profile. First ensure that the directory `~/.oh-my-zsh/completions` exists (otherwise create it), then run `minikube completion zsh > ~/.oh-my-zsh/completions/_minikube`.
+
+### kubectl
+
+1. Add the autocompletion setup to the zsh profile. First ensure that the directory `~/.oh-my-zsh/completions` exists (otherwise create it), then run `kubectl completion zsh > ~/.oh-my-zsh/completions/_kubectl`.

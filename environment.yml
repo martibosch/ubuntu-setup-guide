@@ -7,6 +7,10 @@ dependencies:
   - cookiecutter
   - direnv
   - docker-compose
+  - gh
+  - kubernetes
+  - minikube
+  - nodejs
   - notebook
   - pandoc
   - pre-commit
