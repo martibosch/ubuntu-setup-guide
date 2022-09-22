@@ -54,18 +54,6 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-o
 1. Install [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
 2. Initialize the shell by running `mamba init` (ensure that the command modifies `.zshrc`, otherwise run `mamba init zsh`).
 
-### Zsh tab-completion
-
-1. Clone the [esc/conda-zsh-completion repository](https://github.com/esc/conda-zsh-completion) at `$ZSH_CUSTOM/plugins/`, i.e.: `git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion`
-2. Modify the `plugins` line of `.zshrc` and add `conda-zsh-completion`, e.g., `plugins=(git conda-zsh-completion)`
-3. Activate the autocompletion in `.zshrc` by the adding (ACHTUNG: the snippet below must go **after** the line with `source $ZSH/oh-my-zsh.sh`):
-
-    ```
-    # >>> conda completion >>>
-    autoload -U compinit && compinit
-    # <<< conda completion <<<
-    ```
-
 ### Software to install in the base environment
 
 1. Install the packages from the `environment.yml` file, i.e., from the root of this repository, and within the base environment, run `mamba env update -f environment.yml`.
@@ -86,39 +74,65 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-o
     # <<< direnv setup for zsh <<<
     ```
 
-#### Snakemake
-    
-1. Update the `.zshrc` file to activate autocompletion by adding:
-
-    ```
-    # >>> snakemake autocompletion for zsh >>>
-    compdef _gnu_generic snakemake
-    # <<< snakemake autocompletion for zsh <<<
-    ```
-    
-#### Terraform
-
-1. Add the autocompletion setup to the zsh profile by running `terraform -install-autocomplete`
-
 #### AWS CLI
 
 1. Configure the named profiles using the command `aws configure --profile <profile-name>`.
 
-#### GitHub CLI
+### Autocompletion for oh-my-zsh
 
-1. Add the autocompletion setup to the zsh profile following the steps at https://www.ajfriesen.com/github-cli-auto-completion-with-oh-my-zsh/
+#### Snakemake
+    
+Update the `.zshrc` file to activate autocompletion by adding:
+
+```
+# >>> snakemake autocompletion for zsh >>>
+compdef _gnu_generic snakemake
+# <<< snakemake autocompletion for zsh <<<
+```
+
+#### Terraform
+
+Add the autocompletion setup to the zsh profile by running `terraform -install-autocomplete`
+
+#### mamba
+
+1. Clone the [esc/conda-zsh-completion repository](https://github.com/esc/conda-zsh-completion) at `$ZSH_CUSTOM/plugins/`, i.e.: `git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion`
+2. Modify the `plugins` line of `.zshrc` and add `conda-zsh-completion`, e.g., `plugins=(git conda-zsh-completion)`
+
+#### minikube
+
+1. Add the autocompletion setup to the zsh profile. First ensure that the directory `~/.oh-my-zsh/completions` exists (otherwise create it), then run `minikube completion zsh > ~/.oh-my-zsh/completions/_minikube`.
+
+#### kubectl
+
+1. Add the autocompletion setup to the zsh profile. First ensure that the directory `~/.oh-my-zsh/completions` exists (otherwise create it), then run `kubectl completion zsh > ~/.oh-my-zsh/completions/_kubectl`.
+
+#### Others
+
+First, use the following command to print the completion folders ([credits to Andrej Friesen](https://www.ajfriesen.com/github-cli-auto-completion-with-oh-my-zsh/)):
+
+```bash
+print -l $fpath | grep completion
+```
+
+which should output something like:
+
+```
+/home/<user>/.oh-my-zsh/custom/plugins/<some-plugin>
+/home/<user>/.oh-my-zsh/completions
+/usr/share/zsh/vendor-completions
+```
+
+Then, **after** the line with `source $ZSH/oh-my-zsh.sh` add the following lines to the `.zshrc` file:
+
+```
+# >>> completion (conda, github cli, minikube, kubectl...) >>>
+autoload -U compinit
+compinit -i
+# <<< completion (conda, github cli, minikube, kubectl...) <<<
+```
 
 ## 6. Emacs
 
 1. Clone [the emacs setup](https://github.com/martibosch/.emacs.d), i.e., `git clone git@github.com:martibosch/.emacs.d.git` to the user's home directory.
 2. Follow the installation steps in the `README.md` file.
-
-## 7. Kubernetes
-
-### minikube
-
-1. Add the autocompletion setup to the zsh profile. First ensure that the directory `~/.oh-my-zsh/completions` exists (otherwise create it), then run `minikube completion zsh > ~/.oh-my-zsh/completions/_minikube`.
-
-### kubectl
-
-1. Add the autocompletion setup to the zsh profile. First ensure that the directory `~/.oh-my-zsh/completions` exists (otherwise create it), then run `kubectl completion zsh > ~/.oh-my-zsh/completions/_kubectl`.
