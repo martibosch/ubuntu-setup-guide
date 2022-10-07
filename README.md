@@ -56,7 +56,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-o
 
 ### Software to install in the base environment
 
-1. Install the packages from the `environment.yml` file, i.e., from the root of this repository, and within the base environment, run `mamba env update -f environment.yml`.
+1. Install the packages from the `environment.yaml` file, i.e., from the root of this repository, and within the base environment, run `mamba env update -f environment.yaml`.
 2. Follow the instructions below for package-specific configuration.
 
 #### Jupyter notebook
