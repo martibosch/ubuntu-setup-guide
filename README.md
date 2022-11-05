@@ -99,6 +99,20 @@ Add the autocompletion setup to the zsh profile by running `terraform -install-a
 1. Clone the [esc/conda-zsh-completion repository](https://github.com/esc/conda-zsh-completion) at `$ZSH_CUSTOM/plugins/`, i.e.: `git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion`
 2. Modify the `plugins` line of `.zshrc` and add `conda-zsh-completion`, e.g., `plugins=(git conda-zsh-completion)`
 
+**Optional**: to work with [emacs conda mode](https://github.com/necaris/conda.el), in `~/mambaforge/etc/profile.d/mamba.sh`, change
+
+```
+    case "$cmd" in
+        activate|deactivate)
+```
+
+to
+
+```
+    case "$cmd" in
+        activate|deactivate|config)
+```
+
 #### minikube
 
 1. Add the autocompletion setup to the zsh profile. First ensure that the directory `~/.oh-my-zsh/completions` exists (otherwise create it), then run `minikube completion zsh > ~/.oh-my-zsh/completions/_minikube`.
