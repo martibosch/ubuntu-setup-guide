@@ -1,27 +1,16 @@
 # Ubuntu setup guide
 
-Tested for xubuntu 20.04.3 LTS (Focal Fossa) in a Lenovo Thinkpad X1 Carbon 8.
+Tested for PopOs 22.04 LTS in a Lenovo Thinkpad X1 Carbon 8.
 
 ## 0. Basic configuration
 
-### Key bindings
+### Battery thresholds
 
-* Set Super key as shortcut for Whisker menu at "Keyboard -> Application Shortcuts".
-* At "Keyboard -> Layout", add the "English (US, intl., with dead keys)", and set the "Change layout option" to "Alt+Caps Lock".
-
-### Power management
-
-* At "Power Manager", ensure that "When laptop lid is closed" is set to "Suspend".
-
-#### TLP for battery thresholds
-
-1. Install TLP `sudo apt install tlp tlp-rdw acpi-call-dkms`.
-2. Edit [the configuration files](https://linrunner.de/tlp/settings/introduction.html#config-files) to set the battery charging thresholds.
-3. Activate the thresholds by running `sudo tlp start` and verify the active settings by running `sudo tlp-stat -s -c -b`.
+* Charge only up to 80% to improve battery lifespan: `sudo echo 80 | sudo tee /sys/class/power_supply/BAT0/charge_control_end_threshold`
 
 ## 1. Terminal
 
-1. Install `curl`, `git`, `zsh`, i.e., `sudo apt install curl git zsh`.
+1. Install `zsh`, i.e., `sudo apt install zsh`.
 2. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) and set it as default shell.
 3. Log out and log back in.
 
@@ -43,11 +32,12 @@ Tested for xubuntu 20.04.3 LTS (Focal Fossa) in a Lenovo Thinkpad X1 Carbon 8.
   * add [signing key to git](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key), i.e., `gpg --list-keys --keyid-format=long` and `git config --global user.signingkey <key-id-after-rsa4096>`
   * set the name of the default branch to "main", i.e., `git config --global init.defaultBranch main`
   * set git to sign all commits, i.e., `git config --global commit.gpgsign true`
+  * set git to `git config --global --add --bool push.autoSetupRemote true`
 8. Download the [emacs gitignore file](https://github.com/github/gitignore/blob/main/Global/Emacs.gitignore) and set it as global gitignore, i.e., `git config --global core.excludesfile ~/Emacs.gitignore`
 
 ## 4. Docker
 
-https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
 
 ## 5. Mamba
 
@@ -98,20 +88,6 @@ Add the autocompletion setup to the zsh profile by running `terraform -install-a
 
 1. Clone the [esc/conda-zsh-completion repository](https://github.com/esc/conda-zsh-completion) at `$ZSH_CUSTOM/plugins/`, i.e.: `git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion`
 2. Modify the `plugins` line of `.zshrc` and add `conda-zsh-completion`, e.g., `plugins=(git conda-zsh-completion)`
-
-**Optional**: to work with [emacs conda mode](https://github.com/necaris/conda.el), in `~/mambaforge/etc/profile.d/mamba.sh`, change
-
-```
-    case "$cmd" in
-        activate|deactivate)
-```
-
-to
-
-```
-    case "$cmd" in
-        activate|deactivate|config)
-```
 
 #### minikube
 
