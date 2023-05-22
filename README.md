@@ -43,6 +43,18 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-o
 
 1. Install [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
 2. Initialize the shell by running `mamba init` (ensure that the command modifies `.zshrc`, otherwise run `mamba init zsh`).
+3. Set up the [`create_default_packages`](https://conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html#config-add-default-pkgs) to include by default a set of packages in all conda environments by adding the following to the `.condarc` file:
+
+```
+create_default_packages:
+  - black
+  - jupytext
+  - pandoc
+  - pre-commit
+  - pyright
+  - ruff
+  - ipykernel
+```
 
 ### Software to install in the base environment
 
